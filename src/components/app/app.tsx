@@ -34,7 +34,6 @@ const App = () => {
 
   const background = location.state?.background;
 
-  // Имена полей точно совпадают с ingredientsSlice.ts
   const { ingredients, isLoading } = useSelector((state) => state.ingredients);
   const { isAuthChecked, user } = useSelector((state) => state.auth);
 
@@ -65,7 +64,14 @@ const App = () => {
 
         <Route path='/feed/:number' element={<OrderInfo />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
-        <Route path='/profile/orders/:number' element={<OrderInfo />} />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute>
+              <OrderInfo />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path='/login'
