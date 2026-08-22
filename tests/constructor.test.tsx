@@ -35,7 +35,7 @@ test.beforeEach(async ({ page }) => {
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: /\/api\/ingredients/,
     update: false,
-    notFound: 'fallback',
+    notFound: 'fillfull',
   });
 
   await page.addInitScript(() => {

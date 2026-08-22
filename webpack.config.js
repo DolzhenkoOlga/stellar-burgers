@@ -86,9 +86,10 @@ module.exports = {
     filename: 'bundle.js'
   },
   devServer: {
-    port: 3000,
-    host: '0.0.0.0', 
-    allowedHosts: 'all',
+    static: path.join(__dirname, './dist'),
+    compress: true,
     historyApiFallback: true,
+    port: 4000,
+    open: true
   },
 };
