@@ -6,7 +6,7 @@ import {
   moveIngredient,
   resetConstructor,
   orderBurger,
-  clearOrderModalData  // ← Добавлен импорт
+  clearOrderModalData // ← Добавлен импорт
 } from '../constructorSlice';
 import { TIngredient, TConstructorIngredient, TOrder } from '@utils-types';
 
@@ -109,7 +109,10 @@ describe('Тесты редьюсера burgerConstructorSlice', () => {
       ...initialState,
       orderModalData: { _id: 'order1', number: 12345 } as unknown as TOrder
     };
-    const state = burgerConstructorReducer(stateWithOrder, clearOrderModalData());
+    const state = burgerConstructorReducer(
+      stateWithOrder,
+      clearOrderModalData()
+    );
     expect(state.orderModalData).toBeNull();
   });
 
