@@ -5,7 +5,8 @@ import {
   removeIngredient,
   moveIngredient,
   resetConstructor,
-  orderBurger
+  orderBurger,
+  clearOrderModalData  // ← Добавлен импорт
 } from '../constructorSlice';
 import { TIngredient, TConstructorIngredient, TOrder } from '@utils-types';
 
@@ -60,7 +61,7 @@ describe('Тесты редьюсера burgerConstructorSlice', () => {
     const state = burgerConstructorReducer(initialState, preparedAction);
     expect(state.ingredients).toHaveLength(1);
     expect(state.ingredients[0]._id).toBe('fill1');
-    expect(typeof state.ingredients[0].id).toBe('string'); // проверка генерации uuid
+    expect(typeof state.ingredients[0].id).toBe('string');
   });
 
   it('должен удалить ингредиент (removeIngredient)', () => {
@@ -102,6 +103,16 @@ describe('Тесты редьюсера burgerConstructorSlice', () => {
     expect(state.ingredients).toEqual([]);
   });
 
+  // ✅ Добавлен тест для clearOrderModalData
+  it('должен очистить данные модалки заказа (clearOrderModalData)', () => {
+    const stateWithOrder = {
+      ...initialState,
+      orderModalData: { _id: 'order1', number: 12345 } as unknown as TOrder
+    };
+    const state = burgerConstructorReducer(stateWithOrder, clearOrderModalData());
+    expect(state.orderModalData).toBeNull();
+  });
+
   it('должен обработать orderBurger.pending', () => {
     const action = { type: orderBurger.pending.type };
     const state = burgerConstructorReducer(initialState, action);
@@ -122,8 +133,8 @@ describe('Тесты редьюсера burgerConstructorSlice', () => {
     const state = burgerConstructorReducer(filledState, action);
     expect(state.orderRequest).toBe(false);
     expect(state.orderModalData).toEqual(mockOrder);
-    expect(state.bun).toBeNull(); // конструктор очищен
-    expect(state.ingredients).toEqual([]); // конструктор очищен
+    expect(state.bun).toBeNull();
+    expect(state.ingredients).toEqual([]);
   });
 
   it('должен обработать orderBurger.rejected', () => {
